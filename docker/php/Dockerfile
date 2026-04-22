@@ -1,6 +1,7 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
-RUN apk add --no-cache libzip \
+# icu-libs — runtime для ext-intl (после удаления -dev пакетов без этого падает загрузка intl.so)
+RUN apk add --no-cache icu-libs libzip \
     && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
         icu-dev \
