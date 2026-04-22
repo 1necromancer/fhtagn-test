@@ -154,5 +154,5 @@ flowchart TB
 
 1. Скопировать `.env.example` в `.env`, выставить `APP_KEY` (`php artisan key:generate` внутри контейнера или локально).
 2. Для MySQL в compose: `DB_CONNECTION=mysql`, `DB_HOST=mysql`, `DB_DATABASE=fhtagn`, `DB_USERNAME=fhtagn`, `DB_PASSWORD=secret` (как в `docker-compose.yml`).
-3. `docker compose up -d --build` (или `docker-compose`, если плагин Compose не установлен), затем в контейнере приложения: `composer install` (если нет `vendor` на хосте), `php artisan migrate`.
+3. `docker compose up -d --build` (или `docker-compose`, если плагин Compose не установлен). При первом старте контейнер `app` сам выполнит `composer install`, если нет `vendor/`. Затем: `docker compose exec app php artisan migrate`.
 4. Приложение: `http://localhost:8080` (порт задаётся `APP_PORT`).
