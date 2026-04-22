@@ -1,12 +1,13 @@
 FROM php:8.3-fpm-alpine
 
-RUN apk add --no-cache --virtual .build-deps \
+RUN apk add --no-cache libzip \
+    && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
         icu-dev \
         libzip-dev \
         oniguruma-dev \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install intl opcache pdo_mysql \
+    && docker-php-ext-install intl opcache pdo_mysql zip \
     && apk del .build-deps
 
 RUN apk add --no-cache git unzip
@@ -20,4 +21,4 @@ RUN chmod +x /usr/local/bin/docker-app-entrypoint.sh
 WORKDIR /var/www/html
 
 ENTRYPOINT ["docker-app-entrypoint.sh"]
-CMD ["php-fpm"]
+CMD ["php-fpm", "-F"]

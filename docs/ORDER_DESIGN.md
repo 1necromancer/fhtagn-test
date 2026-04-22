@@ -156,3 +156,5 @@ flowchart TB
 2. Для MySQL в compose: `DB_CONNECTION=mysql`, `DB_HOST=mysql`, `DB_DATABASE=fhtagn`, `DB_USERNAME=fhtagn`, `DB_PASSWORD=secret` (как в `docker-compose.yml`).
 3. `docker compose up -d --build` (или `docker-compose`, если плагин Compose не установлен). При первом старте контейнер `app` сам выполнит `composer install`, если нет `vendor/`. Затем: `docker compose exec app php artisan migrate`.
 4. Приложение: `http://localhost:8080` (порт задаётся `APP_PORT`).
+
+Если сервис `app` не в `docker compose ps`, смотрите причину: `docker compose logs app` (часто — ошибка `composer install` или права на `storage`/`bootstrap/cache`). В `.env` на сервере логично выставить `DB_CONNECTION=mysql` и те же `DB_*`, что в compose (переменные из `environment` в compose всё равно перекрывают `.env` для БД).
